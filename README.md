@@ -2,6 +2,8 @@
 
 Opinionated logging configuration using [microcosm](https://github.com/globality-corp/microcosm) wiring.
 
+[![Circle CI](https://circleci.com/gh/globality-corp/microcosm-logging/tree/develop.svg?style=svg)](https://circleci.com/gh/globality-corp/microcosm-logging/tree/develop)
+
 
 ## Usage
 
