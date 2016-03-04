@@ -16,7 +16,7 @@ setup(
     zip_safe=False,
     keywords="microcosm",
     install_requires=[
-        'loggly-python-handler>=1.0.0',
+        "loggly-python-handler>=1.0.0",
         "microcosm>=0.3.0",
     ],
     setup_requires=[
