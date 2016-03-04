@@ -10,7 +10,7 @@ Opinionated logging configuration using [microcosm](https://github.com/globality
     from microcosm import create_object_graph
 
     graph = create_object_graph(name="foo")
-    graph.use["logger"]
+    graph.use("logger")
 
 
 ## Convention
