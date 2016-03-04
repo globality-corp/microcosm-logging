@@ -7,7 +7,7 @@ version = "0.2.0"
 setup(
     name=project,
     version=version,
-    description="Opinioned logging configuration",
+    description="Opinionated logging configuration",
     author="Globality Engineering",
     author_email="engineering@globality.com",
     url="https://github.com/globality-corp/microcosm-logging",
