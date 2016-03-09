@@ -1,4 +1,4 @@
-from logging import DEBUG, getLogger
+from logging import getLogger
 
 from hamcrest import (
     assert_that,
@@ -19,4 +19,3 @@ def test_using_class_logger_works():
     instance = TestClass()
 
     assert_that(instance.logger, is_(equal_to(getLogger(instance.__class__.__name__))))
-    assert_that(instance.logger.getEffectiveLevel(), is_(equal_to(DEBUG)))

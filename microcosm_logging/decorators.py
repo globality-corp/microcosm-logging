@@ -1,5 +1,5 @@
 """Decorator library for common logging functionality."""
-from logging import DEBUG, getLogger
+from logging import getLogger
 
 
 def logger(obj):
@@ -14,5 +14,4 @@ def logger(obj):
 
     """
     obj.logger = getLogger(obj.__name__)
-    obj.logger.setLevel(DEBUG)
     return obj
