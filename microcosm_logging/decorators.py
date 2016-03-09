@@ -1,0 +1,18 @@
+"""Decorator library for common logging functionality."""
+from logging import DEBUG, getLogger
+
+
+def logger(obj):
+    """
+    logging decorator, assigning an object the `logger` property.
+    Can be used on a Python class, e.g:
+
+        @logger
+        class MyClass(object):
+            ...
+
+
+    """
+    obj.logger = getLogger(obj.__name__)
+    obj.logger.setLevel(DEBUG)
+    return obj
