@@ -7,7 +7,7 @@ Opinionated logging configuration using [microcosm](https://github.com/globality
 
 ## Usage
 
-    from microcosm import create_object_graph
+    from microcosm.api import create_object_graph
 
     graph = create_object_graph(name="foo")
     graph.use("logger")
