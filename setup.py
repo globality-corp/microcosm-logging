@@ -26,7 +26,8 @@ setup(
     ],
     entry_points={
         "microcosm.factories": [
-            "logger = microcosm_logging.factories:configure_logging"
+            "logger = microcosm_logging.factories:configure_logger",
+            "logging = microcosm_logging.factories:configure_logging"
         ],
     },
     tests_require=[
