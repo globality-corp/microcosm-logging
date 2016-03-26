@@ -46,6 +46,15 @@ def configure_logging(graph):
     """
     dict_config = make_dict_config(graph)
     dictConfig(dict_config)
+    return True
+
+
+def configure_logger(graph):
+    """
+    Configure application logger.
+
+    """
+    graph.use("logging")
     return getLogger(graph.metadata.name)
 
 
@@ -63,14 +72,14 @@ def make_dict_config(graph):
     handlers["console"] = make_stream_handler(graph, formatter="default")
 
     # maybe create the loggly handler
-    if not any((graph.metadata.debug, graph.metadata.testing)) and graph.config.logger.loggly.enabled:
+    if not any((graph.metadata.debug, graph.metadata.testing)) and graph.config.logging.loggly.enabled:
         formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
 
     # configure the root logger to output to all handlers
     loggers[""] = {
         "handlers": handlers.keys(),
-        "level": graph.config.logger.level,
+        "level": graph.config.logging.level,
     }
 
     # set log levels for libraries
@@ -130,7 +139,7 @@ def make_stream_handler(graph, formatter):
     return {
         "class": "logging.StreamHandler",
         "formatter": formatter,
-        "level": graph.config.logger.level,
+        "level": graph.config.logging.level,
         "stream": "ext://sys.stdout",
     }
 
@@ -142,20 +151,20 @@ def make_loggly_handler(graph, formatter):
     Used for searchable aggregation.
 
     """
-    base_url = graph.config.logger.loggly.get("base_url", "https://logs-01.loggly.com")
+    base_url = graph.config.logging.loggly.get("base_url", "https://logs-01.loggly.com")
     loggly_url = "{}/inputs/{}/tag/{}".format(
         base_url,
-        graph.config.logger.loggly.token,
+        graph.config.logging.loggly.token,
         ",".join([
             "python",
             graph.metadata.name,
-            graph.config.logger.loggly.environment,
+            graph.config.logging.loggly.environment,
         ]),
     )
     return {
         "class": "loggly.handlers.HTTPSHandler",
         "formatter": formatter,
-        "level": graph.config.logger.level,
+        "level": graph.config.logging.level,
         "url": loggly_url,
     }
 
@@ -173,13 +182,13 @@ def make_library_levels(graph):
         levels.update({
             component: {
                 "level": level,
-            } for component in graph.config.logger.levels.default[level.lower()]
+            } for component in graph.config.logging.levels.default[level.lower()]
         })
     # override components; these can be set per application
     for level in ["DEBUG", "INFO", "WARN", "ERROR"]:
         levels.update({
             component: {
                 "level": level,
-            } for component in graph.config.logger.levels.override[level.lower()]
+            } for component in graph.config.logging.levels.override[level.lower()]
         })
     return levels

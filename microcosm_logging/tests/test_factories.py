@@ -34,7 +34,7 @@ def test_configure_logging_with_custom_logging_level():
     """
     def loader(metadata):
         return dict(
-            logger=dict(
+            logging=dict(
                 level="DEBUG",
             )
         )
@@ -54,7 +54,7 @@ def test_configure_logging_with_custom_library_levels():
     """
     def loader(metadata):
         return dict(
-            logger=dict(
+            logging=dict(
                 level=INFO,
                 levels=dict(
                     default=dict(
@@ -85,7 +85,7 @@ def test_configure_logging_with_loggly_requires_token():
     """
     def loader(metadata):
         return dict(
-            logger=dict(
+            logging=dict(
                 loggly=dict(
                     environment="unittest",
                 )
@@ -103,7 +103,7 @@ def test_configure_logging_with_loggly_requires_environment():
     """
     def loader(metadata):
         return dict(
-            logger=dict(
+            logging=dict(
                 loggly=dict(
                     token="TOKEN",
                 )
@@ -121,7 +121,7 @@ def test_configure_logging_with_invalid_token():
     """
     def loader(metadata):
         return dict(
-            logger=dict(
+            logging=dict(
                 loggly=dict(
                     token=environ.get("LOGGLY_TOKEN", "TOKEN"),
                     environment="unittest",
