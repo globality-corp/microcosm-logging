@@ -18,7 +18,7 @@ from microcosm.api import defaults
         default=dict(
             debug=[],
             info=["boto", "newrelic"],
-            warn=["requests"],
+            warn=["requests", "botocore.vendored.requests"],
             error=[],
         ),
         override=dict(
