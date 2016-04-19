@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-logging"
-version = "0.4.0"
+version = "0.5.0"
 
 setup(
     name=project,
@@ -18,6 +18,7 @@ setup(
     install_requires=[
         "loggly-python-handler>=1.0.0",
         "microcosm>=0.3.0",
+        "requests[security]>=2.9.1",
     ],
     setup_requires=[
         "nose>=1.3.6",
