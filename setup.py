@@ -18,6 +18,7 @@ setup(
     install_requires=[
         "loggly-python-handler>=1.0.0",
         "microcosm>=0.3.0",
+        "requests[security]>=2.9.1",
     ],
     setup_requires=[
         "nose>=1.3.6",
