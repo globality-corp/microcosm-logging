@@ -2,7 +2,6 @@
 Factory that configures logging.
 
 """
-from json import dumps
 from logging import getLogger
 from logging.config import dictConfig
 
@@ -113,20 +112,17 @@ def make_json_formatter(graph):
     Used for searchable aggregation.
 
     """
-    fields = {
-        # what was logged?
+    fields = """{
         "loggerName": "%(name)s",
         "levelName": "%(levelname)s",
-        "message": "%(message)s",
-        # when was it logged?
+        "message": %(message)s,
         "ascTime": "%(asctime)s",
-        # where in the code was it logged?
         "fileName": "%(filename)s",
         "functionName": "%(funcName)s",
-        "lineNo": "%(lineno)d",
-    }
+        "lineNo": "%(lineno)d"
+    }"""
     return {
-        "format": dumps(fields),
+        "format": fields,
         "datefmt": "",
     }
 
