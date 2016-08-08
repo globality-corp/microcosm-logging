@@ -9,6 +9,8 @@ from microcosm.api import defaults
 
 
 @defaults(
+    default_format="%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s",
+
     # default log level is INFO
     level="INFO",
 
@@ -26,11 +28,6 @@ from microcosm.api import defaults
             warn=[],
             error=[],
         ),
-    ),
-
-    # loggly is enabled (unless debug/testing are set)
-    loggly=dict(
-        enabled=True,
     ),
 )
 def configure_logging(graph):
@@ -57,6 +54,26 @@ def configure_logger(graph):
     return getLogger(graph.metadata.name)
 
 
+def enable_loggly(graph):
+    """
+    Enable loggly if it is configured and not debug/testing.
+
+    """
+    if graph.metadata.debug or graph.metadata.testing:
+        return False
+
+    try:
+        if not graph.config.logging.loggly.token:
+            return False
+
+        if not graph.config.logging.loggly.environment:
+            return False
+    except AttributeError:
+        return False
+
+    return True
+
+
 def make_dict_config(graph):
     """
     Build a dictionary configuration from conventions and configuration.
@@ -71,7 +88,7 @@ def make_dict_config(graph):
     handlers["console"] = make_stream_handler(graph, formatter="default")
 
     # maybe create the loggly handler
-    if not any((graph.metadata.debug, graph.metadata.testing)) and graph.config.logging.loggly.enabled:
+    if enable_loggly(graph):
         formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
 
@@ -101,7 +118,7 @@ def make_default_formatter(graph):
 
     """
     return {
-        "format": "%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s"
+        "format": graph.config.logging.default_format,
     }
 
 
