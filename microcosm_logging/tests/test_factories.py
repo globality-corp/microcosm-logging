@@ -1,15 +1,11 @@
 from logging import getLogger, DEBUG, INFO, WARN
 from os import environ
 
-
 from hamcrest import (
     assert_that,
-    calling,
     equal_to,
     is_,
-    raises,
 )
-
 from microcosm.api import create_object_graph
 
 
