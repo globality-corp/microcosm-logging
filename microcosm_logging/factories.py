@@ -156,7 +156,6 @@ def make_loggly_handler(graph, formatter):
         base_url,
         graph.config.logging.loggly.token,
         ",".join([
-            "python",
             graph.metadata.name,
             graph.config.logging.loggly.environment,
         ]),
