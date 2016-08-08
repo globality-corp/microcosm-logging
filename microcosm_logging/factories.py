@@ -29,11 +29,6 @@ from microcosm.api import defaults
             error=[],
         ),
     ),
-
-    # loggly is enabled (unless debug/testing or not configured)
-    loggly=dict(
-        enabled=True,
-    ),
 )
 def configure_logging(graph):
     """
@@ -60,10 +55,11 @@ def configure_logger(graph):
 
 
 def enable_loggly(graph):
-    if graph.metadata.debug or graph.metadata.testing:
-        return False
+    """
+    Enable loggly if it is configured and not debug/testing.
 
-    if not graph.config.logging.loggly.enabled:
+    """
+    if graph.metadata.debug or graph.metadata.testing:
         return False
 
     try:
