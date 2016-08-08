@@ -1,15 +1,11 @@
 from logging import getLogger, DEBUG, INFO, WARN
 from os import environ
 
-
 from hamcrest import (
     assert_that,
-    calling,
     equal_to,
     is_,
-    raises,
 )
-
 from microcosm.api import create_object_graph
 
 
@@ -76,42 +72,6 @@ def test_configure_logging_with_custom_library_levels():
     getLogger("bar").info("Bar should be visible at info")
     getLogger("foo").info("Foo should not be visible at info")
     getLogger("foo").warn("Foo should be visible at warn")
-
-
-def test_configure_logging_with_loggly_requires_token():
-    """
-    Enabling loggly requires `token` attribute.
-
-    """
-    def loader(metadata):
-        return dict(
-            logging=dict(
-                loggly=dict(
-                    environment="unittest",
-                )
-            )
-        )
-
-    graph = create_object_graph(name="test", loader=loader)
-    assert_that(calling(graph.use).with_args("logger"), raises(AttributeError))
-
-
-def test_configure_logging_with_loggly_requires_environment():
-    """
-    Enabling loggly requires `token` and `environment` attributes.
-
-    """
-    def loader(metadata):
-        return dict(
-            logging=dict(
-                loggly=dict(
-                    token="TOKEN",
-                )
-            )
-        )
-
-    graph = create_object_graph(name="test", loader=loader)
-    assert_that(calling(graph.use).with_args("logger"), raises(AttributeError))
 
 
 def test_configure_logging_with_invalid_token():
