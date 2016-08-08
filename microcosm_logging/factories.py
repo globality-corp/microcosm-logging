@@ -64,10 +64,13 @@ def enable_loggly(graph):
     if not graph.config.logging.loggly.enabled:
         return False
 
-    if not graph.config.logging.loggly.token:
-        return False
+    try:
+        if not graph.config.logging.loggly.token:
+            return False
 
-    if not graph.config.logging.loggly.environment:
+        if not graph.config.logging.loggly.environment:
+            return False
+    except AttributeError:
         return False
 
     return True
