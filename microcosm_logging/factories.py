@@ -9,6 +9,8 @@ from microcosm.api import defaults
 
 
 @defaults(
+    default_format="%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s",
+
     # default log level is INFO
     level="INFO",
 
@@ -120,7 +122,7 @@ def make_default_formatter(graph):
 
     """
     return {
-        "format": "%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s"
+        "format": graph.config.logging.default_format,
     }
 
 
