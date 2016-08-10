@@ -11,6 +11,14 @@ from microcosm.api import defaults
 @defaults(
     default_format="%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s",
 
+    https_handler=dict(
+        class_="loggly.handlers.HTTPSHandler",
+    ),
+
+    json_formatter=dict(
+        formatter="pythonjsonlogger.jsonlogger.JsonFormatter",
+    ),
+
     # default log level is INFO
     level="INFO",
 
@@ -28,6 +36,17 @@ from microcosm.api import defaults
             warn=[],
             error=[],
         ),
+    ),
+
+    # loggly
+    loggly=dict(
+        base_url="https://logs-01.loggly.com",
+    ),
+
+    # configure stream handler
+    stream_handler=dict(
+        class_="logging.StreamHandler",
+        stream="ext://sys.stdout",
     ),
 )
 def configure_logging(graph):
@@ -139,7 +158,7 @@ def make_json_formatter(graph):
         'message',
     ]
 
-    formatter = "pythonjsonlogger.jsonlogger.JsonFormatter"
+    formatter = graph.config.logging.json_formatter.formatter
     format = " ".join("%({})".format(field) for field in fields)
 
     return {
@@ -154,10 +173,10 @@ def make_stream_handler(graph, formatter):
 
     """
     return {
-        "class": "logging.StreamHandler",
+        "class": graph.config.logging.stream_handler.class_,
         "formatter": formatter,
         "level": graph.config.logging.level,
-        "stream": "ext://sys.stdout",
+        "stream": graph.config.logging.stream_handler.stream,
     }
 
 
@@ -168,7 +187,7 @@ def make_loggly_handler(graph, formatter):
     Used for searchable aggregation.
 
     """
-    base_url = graph.config.logging.loggly.get("base_url", "https://logs-01.loggly.com")
+    base_url = graph.config.logging.loggly.base_url
     loggly_url = "{}/inputs/{}/tag/{}".format(
         base_url,
         graph.config.logging.loggly.token,
@@ -178,7 +197,7 @@ def make_loggly_handler(graph, formatter):
         ]),
     )
     return {
-        "class": "loggly.handlers.HTTPSHandler",
+        "class": graph.config.logging.https_handler.class_,
         "formatter": formatter,
         "level": graph.config.logging.level,
         "url": loggly_url,
