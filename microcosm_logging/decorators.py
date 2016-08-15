@@ -21,24 +21,17 @@ class ContextLogger(LoggerAdapter):
     """
     Allows for inserting additional context into log records based on the current context.
     To play nicely with the pythonjsonlogger used for json logs, a ContextLogger will
-    update keys on the existing message object if the message is a dictionary otherwise,
-    it will prepend context information before the log message in brackets.
+    update keys on the existing message object if the message is a dictionary otherwise do nothing.
+    The logger does not manipulate string messages because there is no accounting for
+    how different handlers want to display what is in self.extra.
+
+    It is possible to write a custom formatter which takes into account for values added to
+    self.extra when instantiating the context logger.
 
     """
     def process(self, msg, kwargs):
         if isinstance(msg, dict):
             msg.update(self.extra)
-        else:
-            headers_string = [
-                '{header_name}: {header_value}'.format(
-                    header_name=header_name,
-                    header_value=header_value
-                ) for header_name, header_value in self.extra.iteritems()
-            ]
-            msg = '{} {}'.format(
-                "[{}]".format(" ,".join(headers_string)),
-                msg
-            )
         return msg, kwargs
 
 
