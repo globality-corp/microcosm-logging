@@ -51,7 +51,7 @@ def context_logger(context_func, func, parent=None):
     def wrapped(*args, **kwargs):
         parent.logger = ContextLogger(
             getattr(parent, 'logger', getLogger(parent.__class__.__name__)),
-            context_func(*args, **kwargs),
+            context_func(*args, **kwargs) or dict(),
         )
         try:
             result = func(*args, **kwargs)
