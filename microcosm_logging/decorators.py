@@ -30,8 +30,8 @@ class ContextLogger(LoggerAdapter):
 
     """
     def process(self, msg, kwargs):
-        if isinstance(msg, dict):
-            msg.update(self.extra)
+        kwargs.setdefault('extra', {})
+        kwargs['extra'].update(self.extra)
         return msg, kwargs
 
 
