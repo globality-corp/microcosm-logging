@@ -30,11 +30,8 @@ class ContextLogger(LoggerAdapter):
 
     """
     def process(self, msg, kwargs):
-        extra = kwargs.get('extra')
-        if extra is not None:
-            kwargs['extra'].update(self.extra)
-        else:
-            kwargs['extra'] = self.extra
+        kwargs.setdefault('extra', {})
+        kwargs['extra'].update(self.extra)
         return msg, kwargs
 
 
