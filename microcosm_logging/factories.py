@@ -10,6 +10,7 @@ from microcosm.api import defaults
 
 @defaults(
     default_format="%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s",
+    format_string="{asctime} - {name} - [{levelname}] - {message}",
 
     https_handler=dict(
         class_="loggly.handlers.HTTPSHandler",
@@ -104,7 +105,8 @@ def make_dict_config(graph):
 
     # create the console handler
     formatters["default"] = make_default_formatter(graph)
-    handlers["console"] = make_stream_handler(graph, formatter="default")
+    formatters["ExtraFormatter"] = make_extra_console_formatter(graph)
+    handlers["console"] = make_stream_handler(graph, formatter="ExtraFormatter")
 
     # maybe create the loggly handler
     if enable_loggly(graph):
@@ -143,27 +145,24 @@ def make_default_formatter(graph):
 
 def make_json_formatter(graph):
     """
-    Create the JSON log formatter.
-
-    Used for searchable aggregation.
+    Create the default json formatter.
 
     """
-    fields = [
-        'asctime',
-        'levelname',
-        'name',
-        'filename',
-        'funcName',
-        'lineno',
-        'message',
-    ]
-
-    formatter = graph.config.logging.json_formatter.formatter
-    format = " ".join("%({})".format(field) for field in fields)
 
     return {
-        '()': formatter,
-        "format": format,
+        "()": graph.config.logging.json_formatter.formatter,
+    }
+
+
+def make_extra_console_formatter(graph):
+    """
+    Create the default console formatter.
+
+    """
+
+    return {
+        "()": "microcosm_logging.formatters.ExtraConsoleFormatter",
+        "format_string": graph.config.logging.format_string,
     }
 
 
