@@ -9,8 +9,7 @@ from microcosm.api import defaults
 
 
 @defaults(
-    default_format="%(asctime)s - %(name)-12s - [%(levelname)s] - %(message)s",
-    format_string="{asctime} - {name} - [{levelname}] - {message}",
+    default_format="{asctime} - {name} - [{levelname}] - {message}",
 
     https_handler=dict(
         class_="loggly.handlers.HTTPSHandler",
@@ -104,7 +103,6 @@ def make_dict_config(graph):
     loggers = {}
 
     # create the console handler
-    formatters["default"] = make_default_formatter(graph)
     formatters["ExtraFormatter"] = make_extra_console_formatter(graph)
     handlers["console"] = make_stream_handler(graph, formatter="ExtraFormatter")
 
@@ -131,18 +129,6 @@ def make_dict_config(graph):
     )
 
 
-def make_default_formatter(graph):
-    """
-    Create the default log formatter.
-
-    Used for console/debug logging.
-
-    """
-    return {
-        "format": graph.config.logging.default_format,
-    }
-
-
 def make_json_formatter(graph):
     """
     Create the default json formatter.
@@ -162,7 +148,7 @@ def make_extra_console_formatter(graph):
 
     return {
         "()": "microcosm_logging.formatters.ExtraConsoleFormatter",
-        "format_string": graph.config.logging.format_string,
+        "format_string": graph.config.logging.default_format,
     }
 
 
