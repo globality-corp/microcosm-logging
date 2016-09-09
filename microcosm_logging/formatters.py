@@ -14,7 +14,7 @@ class ExtraConsoleFormatter(Formatter):
 
         `Message bar.`
 
-    Besides having the ability to substitue values from extra into the message
+    Besides having the ability to substitute values from `extra` into the message
     record, this formatter is consistent with the builtin logging.Formatter.
 
     """
@@ -26,13 +26,14 @@ class ExtraConsoleFormatter(Formatter):
         message = record.getMessage()
 
         extra = merge_record_extra(record, dict())
-        if not isinstance(record.msg, dict):
-            message = message.format(**extra)
+        if not isinstance(record.msg, dict) and extra:
+            message = self.format_safely(message, **extra)
 
         if self.format_string.find("%(asctime)") >= 0:
             record.asctime = self.formatTime(record, self.datefmt)
 
-        log_string = self.format_string.format(
+        log_string = self.format_safely(
+            self.format_string,
             asctime=self.formatTime(record),
             name=record.name,
             levelname=record.levelname,
@@ -45,3 +46,10 @@ class ExtraConsoleFormatter(Formatter):
             log_string = log_string + self.formatException(record.exc_info)
 
         return log_string
+
+    def format_safely(self, s, **kwargs):
+        try:
+            return s.format(**kwargs)
+        except KeyError:
+            # some messages will use '{' and '}' without meaning to use format strings
+            return s
