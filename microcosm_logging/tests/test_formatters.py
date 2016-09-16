@@ -41,7 +41,7 @@ def test_extra_formatter_formats_log_with_extra():
 
 
 def test_extra_formatter_respects_old_style_formatting():
-    format_string = "{message}"
+    format_string = "%(message)s"
     formatter = ExtraConsoleFormatter(format_string)
 
     log_message = "A sample log with old string %s."
