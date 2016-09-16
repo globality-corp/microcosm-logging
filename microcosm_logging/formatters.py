@@ -48,8 +48,20 @@ class ExtraConsoleFormatter(Formatter):
         return log_string
 
     def format_safely(self, s, **kwargs):
+        # support old-style formatting
+        try:
+            result = s % kwargs
+        except (KeyError, SyntaxError, TypeError):
+            pass
+        else:
+            if result != s:
+                return result
+
+        # support new-style formatting
         try:
             return s.format(**kwargs)
         except KeyError:
-            # some messages will use '{' and '}' without meaning to use format strings
-            return s
+            pass
+
+        # some messages will use '{' and '}' without meaning to use format strings
+        return s
