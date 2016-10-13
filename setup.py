@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-logging"
-version = "0.11.0"
+version = "0.12.0"
 
 setup(
     name=project,
