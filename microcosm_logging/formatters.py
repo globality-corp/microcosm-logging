@@ -1,4 +1,5 @@
 from logging import Formatter
+from socket import gethostname
 
 from pythonjsonlogger.jsonlogger import merge_record_extra
 
@@ -26,6 +27,7 @@ class ExtraConsoleFormatter(Formatter):
         message = record.getMessage()
 
         extra = merge_record_extra(record, dict())
+        extra['_hostname'] = gethostname()
         if not isinstance(record.msg, dict) and extra:
             message = self.format_safely(message, **extra)
 
