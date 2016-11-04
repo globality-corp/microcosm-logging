@@ -25,17 +25,17 @@ Opinionated logging configuration using [microcosm](https://github.com/globality
 
 To set the global logging level to something other than info, use:
 
-    config.logger.level = "WARN"
+    config.logging.level = "WARN"
 
 To enable loggly, set its `token` and configure an `environment` name:
 
-    config.logger.loggly.token = "LOGGLY_TOKEN"
-    config.logger.loggly.environment = "ENVIRONMENT_NAME"
+    config.logging.loggly.token = "LOGGLY_TOKEN"
+    config.logging.loggly.environment = "ENVIRONMENT_NAME"
 
 To disable loggly unconditionally:
 
-    config.logger.loggly.enabled = False
+    config.logging.loggly.enabled = False
 
 To tune the logging levels of third-party components:
 
-    config.logger.loggly.levels.override.warn = ["foo", "bar"]
+    config.logging.loggly.levels.override.warn = ["foo", "bar"]
