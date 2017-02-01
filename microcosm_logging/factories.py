@@ -10,6 +10,7 @@ from microcosm.api import defaults
 
 @defaults(
     default_format="{asctime} - {name} - [{levelname}] - {message}",
+    json_required_keys="%(asctime)s - %(name)s - %(filename)s - %(levelname)s - %(levelno) - %(message)s",
 
     https_handler=dict(
         class_="loggly.handlers.HTTPSHandler",
@@ -137,6 +138,7 @@ def make_json_formatter(graph):
 
     return {
         "()": graph.config.logging.json_formatter.formatter,
+        "fmt": graph.config.logging.json_required_keys,
     }
 
 
