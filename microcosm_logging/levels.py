@@ -25,6 +25,9 @@ class ConditionalLoggingLevel(object):
         else:
             return self._false_levelno
 
+    def __int__(self):
+        return self.levelno
+
     def __str__(self):
         return str(self.levelno)
 
@@ -50,4 +53,5 @@ class ConditionalLoggingLevel(object):
 
         """
         # NB: set `logger.level` because loggers validate the type of the input to `logger.setLevel()`
-        logger.level = cls(*args, **kwargs)
+        logger.level = level = cls(*args, **kwargs)
+        return level
