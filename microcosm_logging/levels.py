@@ -29,7 +29,7 @@ class ConditionalLoggingLevel(object):
         return str(self.levelno)
 
     def __repr__(self):
-        return self.levelno
+        return str(self.levelno)
 
     def __eq__(self, other):
         if hasattr(other, "levelno"):
