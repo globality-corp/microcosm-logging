@@ -93,3 +93,16 @@ def test_configure_logging_with_invalid_token():
     graph.use("logger")
 
     graph.logger.info("Info will appear in loggly if LOGGLY_TOKEN is set correctly.")
+
+
+def test_extra_and_exc_info():
+    graph = create_object_graph(name="test", testing=True)
+
+    try:
+        raise Exception("error")
+    except Exception:
+        graph.logger.info(
+            "Will include extra info and stack: {foo}",
+            exc_info=True,
+            extra=dict(foo="bar"),
+        )
