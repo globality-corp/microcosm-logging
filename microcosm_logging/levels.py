@@ -6,7 +6,7 @@ from functools import total_ordering
 
 
 @total_ordering
-class ConditionalLoggingLevel(object):
+class ConditionalLoggingLevel:
     """
     A logging level that is conditional on a function.
 

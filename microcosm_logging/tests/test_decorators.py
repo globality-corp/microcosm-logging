@@ -14,13 +14,13 @@ from microcosm_logging.decorators import logger, context_logger
 
 
 @logger
-class TestClass(object):
+class TestClass:
 
     pass
 
 
 @logger
-class TestContextClass(object):
+class TestContextClass:
 
     def function(self):
         self.logger.info("success!")

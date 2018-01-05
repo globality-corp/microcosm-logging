@@ -8,7 +8,7 @@ def logger(obj):
     Can be used on a Python class, e.g:
 
         @logger
-        class MyClass(object):
+        class MyClass:
             ...
 
 
