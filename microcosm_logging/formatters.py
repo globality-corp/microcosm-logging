@@ -25,7 +25,7 @@ class ExtraConsoleFormatter(Formatter):
     def format(self, record):
         message = record.getMessage()
 
-        extra = merge_record_extra(record, dict())
+        extra = merge_record_extra(record=record, target=dict(), reserved=dict())
         if not isinstance(record.msg, dict) and extra:
             message = self.format_safely(message, **extra)
 
