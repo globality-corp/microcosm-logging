@@ -18,7 +18,7 @@ setup(
     install_requires=[
         "loggly-python-handler>=1.0.0",
         "microcosm>=2.0.0",
-        "python-json-logger>=0.1.8",
+        "python-json-logger==0.1.8",
         "requests[security]>=2.18.4",
     ],
     setup_requires=[
