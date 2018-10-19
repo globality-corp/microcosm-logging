@@ -1,4 +1,5 @@
 from logging import getLogger
+from unittest.mock import Mock
 
 from hamcrest import (
     assert_that,
@@ -7,8 +8,6 @@ from hamcrest import (
     is_,
     raises,
 )
-
-from mock import Mock
 
 from microcosm_logging.decorators import logger, context_logger
 
