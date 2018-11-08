@@ -122,3 +122,25 @@ def test_extra_formatter_ignores_key_errors():
 
     log_result = formatter.format(log_record)
     assert_that(log_result, is_(equal_to(str(log_message))))
+
+
+def test_extra_formatter_ignores_malformed_old_format():
+    format_string = "{message}"
+    formatter = ExtraConsoleFormatter(format_string)
+
+    log_message = '%2C'
+    # This would cause the old formatter to throw:
+    # 'ValueError: unsupported format character 'C' (0x43) at index 2'
+
+    log_record = LogRecord(
+        'name',
+        INFO,
+        'some_function',
+        42,
+        log_message,
+        None,
+        0
+    )
+
+    log_result = formatter.format(log_record)
+    assert_that(log_result, is_(equal_to(str(log_message))))
