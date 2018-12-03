@@ -29,7 +29,7 @@ from microcosm.api import defaults
             debug=[],
             info=["boto", "newrelic"],
             warn=["bravado_core", "requests", "botocore.vendored.requests", "swagger_spec_validator"],
-            error=["bravado.requests_client"],
+            error=["bravado.requests_client", "FuturesSession"],
         ),
         override=dict(
             debug=[],
