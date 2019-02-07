@@ -60,7 +60,7 @@ class ExtraConsoleFormatter(Formatter):
         # support new-style formatting
         try:
             return s.format(**kwargs)
-        except KeyError:
+        except (KeyError, IndexError):
             pass
 
         # some messages will use '{' and '}' without meaning to use format strings
