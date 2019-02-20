@@ -1,10 +1,6 @@
 from logging import INFO, LogRecord
 
-from hamcrest import (
-    assert_that,
-    equal_to,
-    is_,
-)
+from hamcrest import assert_that, equal_to, is_
 
 from microcosm_logging.formatters import ExtraConsoleFormatter
 

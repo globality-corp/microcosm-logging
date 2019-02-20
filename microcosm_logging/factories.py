@@ -27,9 +27,21 @@ from microcosm.api import defaults
     levels=dict(
         default=dict(
             debug=[],
-            info=["boto", "newrelic"],
-            warn=["bravado_core", "requests", "botocore.vendored.requests", "swagger_spec_validator"],
-            error=["bravado.requests_client", "FuturesSession"],
+            info=[
+                "boto",
+                "newrelic",
+            ],
+            warn=[
+                "aws_encryption_sdk",
+                "botocore.vendored.requests",
+                "bravado_core",
+                "requests",
+                "swagger_spec_validator",
+            ],
+            error=[
+                "bravado.requests_client",
+                "FuturesSession",
+            ],
         ),
         override=dict(
             debug=[],

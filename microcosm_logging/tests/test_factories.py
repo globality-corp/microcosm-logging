@@ -1,11 +1,12 @@
-from logging import getLogger, DEBUG, INFO, WARN
+from logging import (
+    DEBUG,
+    INFO,
+    WARN,
+    getLogger,
+)
 from os import environ
 
-from hamcrest import (
-    assert_that,
-    equal_to,
-    is_,
-)
+from hamcrest import assert_that, equal_to, is_
 from microcosm.api import create_object_graph
 
 

@@ -9,7 +9,7 @@ from hamcrest import (
     raises,
 )
 
-from microcosm_logging.decorators import logger, context_logger
+from microcosm_logging.decorators import context_logger, logger
 
 
 @logger
