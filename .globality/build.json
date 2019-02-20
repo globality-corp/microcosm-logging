@@ -1,6 +1,11 @@
 {
-  "type": "python-library",
   "params": {
-    "name": "microcosm-logging"
-  }
+    "name": "microcosm-logging",
+    "pypi": {
+      "enabled": true,
+      "repository": "jfrog"
+    }
+  },
+  "type": "python-library",
+  "version": "2.2.1"
 }

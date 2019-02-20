@@ -1,5 +1,5 @@
 """Decorator library for common logging functionality."""
-from logging import getLogger, LoggerAdapter
+from logging import LoggerAdapter, getLogger
 
 
 def logger(obj):

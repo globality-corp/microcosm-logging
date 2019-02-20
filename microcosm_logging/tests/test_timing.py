@@ -4,11 +4,8 @@ Timing usage tests.
 """
 from time import sleep
 
-from hamcrest import (
-    assert_that,
-    close_to,
-    is_,
-)
+from hamcrest import assert_that, close_to, is_
+
 from microcosm_logging.timing import elapsed_time
 
 

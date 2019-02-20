@@ -2,7 +2,8 @@
 Test logging levels.
 
 """
-from logging import getLogger, INFO, WARNING
+from logging import INFO, WARNING, getLogger
+
 from hamcrest import assert_that, equal_to, is_
 
 from microcosm_logging.levels import ConditionalLoggingLevel
