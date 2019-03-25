@@ -3,8 +3,9 @@
     "name": "microcosm-logging",
     "pypi": {
       "enabled": true,
+      "repository": "pypi"
     }
   },
   "type": "python-library",
-  "version": "2.2.1"
+  "version": "2019.8.2548"
 }
