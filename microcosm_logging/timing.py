@@ -12,5 +12,5 @@ def elapsed_time(target):
     try:
         yield start_time
     finally:
-        elapsed_time = time() - start_time
-        target["elapsed_time"] = elapsed_time
+        elapsed_ms = (time() - start_time) * 1000
+        target["elapsed_time"] = elapsed_ms
