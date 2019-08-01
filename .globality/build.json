@@ -2,7 +2,7 @@
   "params": {
     "name": "microcosm-logging",
     "pypi": {
-      "enabled": true,
+      "enabled": true
     }
   },
   "type": "python-library",
