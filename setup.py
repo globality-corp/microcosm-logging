@@ -19,7 +19,7 @@ setup(
     keywords="microcosm",
     install_requires=[
         "loggly-python-handler>=1.0.0",
-        "microcosm>=2.0.0",
+        "microcosm>=2.12.0",
         "python-json-logger>=0.1.9",
         "requests[security]>=2.18.4",
     ],
