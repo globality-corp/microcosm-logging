@@ -189,15 +189,25 @@ def make_loggly_handler(graph, formatter):
     """
     base_url = graph.config.logging.loggly.base_url
     metric_service_name = environ.get("METRICS_NAME", graph.metadata.name)
-    loggly_url = "{}/inputs/{}/tag/{}".format(
-        base_url,
-        graph.config.logging.loggly.token,
-        ",".join([
-            graph.metadata.name,
-            graph.config.logging.loggly.environment,
-            metric_service_name
-        ]),
-    )
+    if metric_service_name != graph.metadata.name:
+        loggly_url = "{}/inputs/{}/tag/{}".format(
+            base_url,
+            graph.config.logging.loggly.token,
+            ",".join([
+                graph.metadata.name,
+                graph.config.logging.loggly.environment,
+                metric_service_name,
+            ]),
+        )
+    else:
+        loggly_url = "{}/inputs/{}/tag/{}".format(
+            base_url,
+            graph.config.logging.loggly.token,
+            ",".join([
+                graph.metadata.name,
+                graph.config.logging.loggly.environment,
+            ]),
+        )
     return {
         "class": graph.config.logging.https_handler.class_,
         "formatter": formatter,
