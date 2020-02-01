@@ -2,6 +2,7 @@
 Factory that configures logging.
 
 """
+from os import environ
 from logging import getLogger
 from logging.config import dictConfig
 
@@ -187,13 +188,15 @@ def make_loggly_handler(graph, formatter):
 
     """
     base_url = graph.config.logging.loggly.base_url
+    metric_service_name = environ.get("METRICS_NAME", graph.metadata.name)
     loggly_url = "{}/inputs/{}/tag/{}".format(
         base_url,
         graph.config.logging.loggly.token,
-        ",".join([
+        ",".join(set([
             graph.metadata.name,
             graph.config.logging.loggly.environment,
-        ]),
+            metric_service_name,
+        ])),
     )
     return {
         "class": graph.config.logging.https_handler.class_,
