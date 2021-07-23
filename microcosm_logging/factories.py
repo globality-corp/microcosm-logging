@@ -2,9 +2,15 @@
 Factory that configures logging.
 
 """
-from logging import getLogger
+from logging import (
+    CRITICAL,
+    getLogger,
+    getLogRecordFactory,
+    setLogRecordFactory,
+)
 from logging.config import dictConfig
 from os import environ
+from typing import Dict
 
 from microcosm.api import defaults
 
@@ -50,6 +56,7 @@ from microcosm.api import defaults
             warn=[],
             error=[],
         ),
+        bump=dict(),
     ),
 
     # loggly
@@ -133,6 +140,7 @@ def make_dict_config(graph):
 
     # set log levels for libraries
     loggers.update(make_library_levels(graph))
+    bump_library_levels(graph)
 
     return dict(
         version=1,
@@ -229,3 +237,26 @@ def make_library_levels(graph):
             } for component in graph.config.logging.levels.override[level.lower()]
         })
     return levels
+
+
+def bump_level_factory(mapping: Dict[str, int]):
+    factory = getLogRecordFactory()
+
+    def apply(name, level, *args, **kwargs):
+        return factory(
+            name,
+            min(level + mapping.get(name, 0), CRITICAL),
+            *args,
+            **kwargs,
+        )
+
+    return apply
+
+
+def bump_library_levels(graph):
+    if not graph.config.logging.levels.bump:
+        return
+
+    setLogRecordFactory(
+        bump_level_factory(graph.config.logging.levels.bump),
+    )
