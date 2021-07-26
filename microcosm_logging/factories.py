@@ -2,9 +2,9 @@
 Factory that configures logging.
 
 """
-from os import environ
 from logging import getLogger
 from logging.config import dictConfig
+from os import environ
 
 from microcosm.api import defaults
 
