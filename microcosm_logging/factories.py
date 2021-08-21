@@ -82,7 +82,8 @@ def configure_logging(graph):
 
     """
     dict_config = make_dict_config(graph)
-    logger.info(dict_config)
+    new_logger = getLogger(graph.metadata.name)
+    print(dict_config)
     print(dict_config)
     dictConfig(dict_config)
     return True
@@ -102,8 +103,18 @@ def enable_loggly(graph):
     Enable loggly if it is configured and not debug/testing.
 
     """
-    if graph.metadata.debug or graph.metadata.testing:
-        return False
+    # if graph.metadata.debug or graph.metadata.testing:
+    #     return False
+    new_logger = getLogger(graph.metadata.name)
+    try:
+        print(graph.config.logging.loggly.token)
+    except AttributeError:
+        print("No token found!")
+
+    try:
+        print(graph.config.logging.loggly.environment)
+    except AttributeError:
+        print("No loggly environment found!")
 
     try:
         if not graph.config.logging.loggly.token:
@@ -131,9 +142,10 @@ def make_dict_config(graph):
     handlers["console"] = make_stream_handler(graph, formatter="ExtraFormatter")
 
     # maybe create the loggly handler
+    new_logger = getLogger(graph.metadata.name)
     if enable_loggly(graph):
         print('LOGGLY ENABLED')
-        logger.info('LOGGLY ENABLED')
+        print('LOGGLY ENABLED')
         formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
 
