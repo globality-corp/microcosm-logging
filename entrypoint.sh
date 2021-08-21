@@ -25,18 +25,21 @@
 
 if [ "$1" = "test" ]; then
    # Install standard test dependencies; YMMV
-   pip --quiet install \
-       .[test] nose PyHamcrest coverage
-   exec nosetests
+#   pip --quiet install \
+#       .[test] nose PyHamcrest coverage
+#   exec nosetests
+    echo "hi"
 elif [ "$1" = "lint" ]; then
-   # Install standard linting dependencies; YMMV
-   pip --quiet install \
-       .[lint] flake8 flake8-print flake8-logging-format flake8-isort
-   flake8 ${NAME}
+#   # Install standard linting dependencies; YMMV
+#   pip --quiet install \
+#       .[lint] flake8 flake8-print flake8-logging-format flake8-isort
+#   flake8 ${NAME}
+    echo "hi"
 elif [ "$1" = "typehinting" ]; then
-   # Install standard type-linting dependencies
-   pip --quiet install mypy
-   mypy ${NAME} --ignore-missing-imports
+#   # Install standard type-linting dependencies
+#   pip --quiet install mypy
+#   mypy ${NAME} --ignore-missing-imports
+    echo "hi"
 else
    echo "Cannot execute $@"
    exit 3
