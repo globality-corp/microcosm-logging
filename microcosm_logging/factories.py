@@ -13,6 +13,7 @@ from os import environ
 from typing import Dict
 
 from microcosm.api import defaults
+from microcosm_logging.decorators import logger
 
 
 @defaults(
@@ -81,6 +82,8 @@ def configure_logging(graph):
 
     """
     dict_config = make_dict_config(graph)
+    logger.info(dict_config)
+    print(dict_config)
     dictConfig(dict_config)
     return True
 
@@ -129,6 +132,8 @@ def make_dict_config(graph):
 
     # maybe create the loggly handler
     if enable_loggly(graph):
+        print('LOGGLY ENABLED')
+        logger.info('LOGGLY ENABLED')
         formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
 
