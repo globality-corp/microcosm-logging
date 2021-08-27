@@ -103,18 +103,10 @@ def enable_loggly(graph):
     Enable loggly if it is configured and not debug/testing.
 
     """
-    # if graph.metadata.debug or graph.metadata.testing:
-    #     return False
-    new_logger = getLogger(graph.metadata.name)
-    try:
-        print(graph.config.logging.loggly.token)
-    except AttributeError:
-        print("No token found!")
-
-    try:
-        print(graph.config.logging.loggly.environment)
-    except AttributeError:
-        print("No loggly environment found!")
+    print(f"graph.metadata.debug: {graph.metadata.debug}")
+    print(f"graph.metadata.testing: {graph.metadata.testing}")
+    if graph.metadata.debug or graph.metadata.testing:
+        return False
 
     try:
         if not graph.config.logging.loggly.token:
