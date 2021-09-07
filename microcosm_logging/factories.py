@@ -10,8 +10,6 @@ from logging import (
 )
 from logging.config import dictConfig
 from os import environ
-from pathlib import Path
-from tempfile import TemporaryDirectory
 from typing import Dict
 
 from microcosm.api import defaults

@@ -3,7 +3,6 @@ from logging import (
     INFO,
     WARN,
     getLogger,
-    log,
 )
 from os import environ
 from unittest import TestCase
