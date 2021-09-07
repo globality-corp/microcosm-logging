@@ -39,3 +39,7 @@ To disable loggly unconditionally:
 To tune the logging levels of third-party components:
 
     config.logging.loggly.levels.override.warn = ["foo", "bar"]
+
+To enable logstash to work with a local client, enable it explicitly:
+
+    config.logging.logstash.enabled = True

@@ -3,9 +3,11 @@ from logging import (
     INFO,
     WARN,
     getLogger,
+    log,
 )
 from os import environ
 from unittest import TestCase
+from unittest.mock import patch
 
 from hamcrest import (
     assert_that,
@@ -99,6 +101,29 @@ class TestFactories(TestCase):
         graph.use("logger")
 
         graph.logger.info("Info will appear in loggly if LOGGLY_TOKEN is set correctly.")
+
+    def test_configure_logstash(self):
+        """
+        Enabling logstash
+
+        """
+        def loader(metadata):
+            return dict(
+                logging=dict(
+                    logstash=dict(
+                        enabled=True,
+                    )
+                )
+            )
+
+        with patch("logstash_async.handler.SynchronousLogstashHandler.emit") as mocked_emit:
+            graph = create_object_graph(name="test", loader=loader)
+            graph.use("logger")
+
+            graph.logger.info("Info will appear in logstash.")
+
+            log_record = mocked_emit.call_args[0][0]
+            assert_that(log_record.msg, is_(equal_to("Info will appear in logstash.")))
 
     def test_extra_and_exc_info(self):
         graph = create_object_graph(name="test", testing=True)
