@@ -12,7 +12,7 @@ from logging.config import dictConfig
 from os import environ
 from typing import Dict
 
-from microcosm.api import defaults
+from microcosm.api import defaults, typed
 
 
 @defaults(
@@ -66,7 +66,7 @@ from microcosm.api import defaults
 
     # logstash
     logstash=dict(
-        enabled=False,
+        enabled=typed(bool, default_value=False),
         host="localhost",
         port=5959,
     ),
