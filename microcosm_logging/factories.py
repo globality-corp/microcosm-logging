@@ -12,7 +12,7 @@ from logging.config import dictConfig
 from os import environ
 from typing import Dict
 
-from microcosm.api import defaults
+from microcosm.api import defaults, typed
 
 
 @defaults(
@@ -62,6 +62,13 @@ from microcosm.api import defaults
     # loggly
     loggly=dict(
         base_url="https://logs-01.loggly.com",
+    ),
+
+    # logstash
+    logstash=dict(
+        enabled=typed(bool, default_value=False),
+        host="localhost",
+        port=5959,
     ),
 
     # configure stream handler
@@ -131,6 +138,10 @@ def make_dict_config(graph):
     if enable_loggly(graph):
         formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
+
+    # create the logstash handler only if explicitly configured
+    if graph.config.logging.logstash.enabled:
+        handlers["LogstashHandler"] = make_logstash_handler(graph)
 
     # configure the root logger to output to all handlers
     loggers[""] = {
@@ -211,6 +222,22 @@ def make_loggly_handler(graph, formatter):
         "formatter": formatter,
         "level": graph.config.logging.level,
         "url": loggly_url,
+    }
+
+
+def make_logstash_handler(graph):
+    """
+    Create the logstash handler
+
+    Relies on a temporary directory for the locally-cached database path
+    that is then streamed to a local logstash daemon. This is created in
+    the OS temp storage and will be garbage collected at an appropriate time.
+
+    """
+    return {
+        "class": "logstash_async.handler.SynchronousLogstashHandler",
+        "host": graph.config.logging.logstash.host,
+        "port": graph.config.logging.logstash.port,
     }
 
 
