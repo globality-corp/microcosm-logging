@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 
 project = "microcosm-logging"
-version = "1.8.0"
+version = "1.9.0"
 
 setup(
     name=project,
@@ -22,6 +22,7 @@ setup(
         "microcosm>=2.12.0",
         "python-json-logger>=0.1.9",
         "requests[security]>=2.18.4",
+        "python-logstash-async>=2.3.0",
     ],
     setup_requires=[
         "nose>=1.3.6",
