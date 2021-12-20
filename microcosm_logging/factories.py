@@ -74,6 +74,7 @@ from microcosm.api import defaults, typed
     # configure stream handler
     stream_handler=dict(
         class_="logging.StreamHandler",
+        formatter="ExtraFormatter",
         stream="ext://sys.stdout",
     ),
 )
@@ -130,13 +131,15 @@ def make_dict_config(graph):
     handlers = {}
     loggers = {}
 
-    # create the console handler
+    # create formatters
     formatters["ExtraFormatter"] = make_extra_console_formatter(graph)
-    handlers["console"] = make_stream_handler(graph, formatter="ExtraFormatter")
+    formatters["JSONFormatter"] = make_json_formatter(graph)
+
+    # create the console handler with the configured formatter
+    handlers["console"] = make_stream_handler(graph, formatter=graph.config.logging.stream_handler.formatter)
 
     # maybe create the loggly handler
     if enable_loggly(graph):
-        formatters["JSONFormatter"] = make_json_formatter(graph)
         handlers["LogglyHTTPSHandler"] = make_loggly_handler(graph, formatter="JSONFormatter")
 
     # create the logstash handler only if explicitly configured
