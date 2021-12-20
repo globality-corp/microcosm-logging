@@ -27,6 +27,10 @@ To set the global logging level to something other than info, use:
 
     config.logging.level = "WARN"
 
+To set the console logger format to json:
+
+    config.logging.stream_handler.formatter = "JSONFormatter"
+
 To enable loggly, set its `token` and configure an `environment` name:
 
     config.logging.loggly.token = "LOGGLY_TOKEN"
