@@ -262,7 +262,8 @@ jobs:
             pip install -U pip==23.2.1
             pip install --quiet awscli twine==4.0.2 packaging==23.1
             aws codeartifact login --tool pip --repository globality-pypi-local --domain globality --domain-owner $AWS_ACCOUNT_ID --region us-east-1
-            export version=0.${CIRCLE_BUILD_NUM}.dev${CIRCLE_BUILD_NUM}
+            CURRENT_VERSION=$(cat .bumpversion.cfg | awk '/current_version / {print $3}')
+            sed -i -e "s#${CURRENT_VERSION}#0.${CIRCLE_BUILD_NUM}.dev${CIRCLE_BUILD_NUM}#" setup.py
             version=0.${CIRCLE_BUILD_NUM}.dev${CIRCLE_BUILD_NUM}
             python setup.py sdist bdist_wheel
             aws codeartifact login --tool twine --domain globality --repository globality-pypi-local --region us-east-1
