@@ -13,7 +13,7 @@
 
 # ----------- deps -----------
 # Install from Debian Stretch with modern Python support
-FROM python:3.7-slim-buster as deps
+FROM python:3.8-slim-buster as deps
 
 #
 # Most services will use the same set of packages here, though a few will install
