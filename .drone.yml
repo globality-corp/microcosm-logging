@@ -75,7 +75,6 @@ steps:
         from_secret: AWS_ACCOUNT_ID
       EXTRA_INDEX_URL:
         from_secret: EXTRA_INDEX_URL
-      NAME: microcosm_logging
     depends_on:
       - sonar-scanner
     commands:
@@ -84,7 +83,7 @@ steps:
       - export version=$(cat .bumpversion.cfg | awk '/current_version / {print $3}')
       - aws codeartifact login --tool pip --repository globality-pypi-local --domain globality --domain-owner $AWS_ACCOUNT_ID --region us-east-1
       - python setup.py sdist bdist_wheel
-      - aws codeartifact login --tool twine --domain globality --repository globality-pypi-local --region us-east-1 && twine upload --repository codeartifact dist/${NAME}-${version}* --verbose
+      - aws codeartifact login --tool twine --domain globality --repository globality-pypi-local --region us-east-1 && twine upload --repository codeartifact dist/microcosm_logging-${version}* --verbose
     when:
       branch:
         - master
@@ -98,14 +97,13 @@ steps:
       TWINE_PASSWORD:
         from_secret: PYPI_TOKEN
       TWINE_REPOSITORY: https://upload.pypi.org/legacy/
-      NAME: microcosm_logging
     commands:
       - pip install -U pip==24.0
       - pip install --quiet awscli twine==4.0.2
       - export version=$(cat .bumpversion.cfg | awk '/current_version / {print $3}')
       - echo "Publishing ${version}"
       - python setup.py sdist bdist_wheel
-      - twine upload --repository pypi dist/${NAME}-${version}* --non-interactive --verbose
+      - twine upload --repository pypi dist/microcosm_logging-${version}* --non-interactive --verbose
     when:
       branch:
         - master
