@@ -10,7 +10,6 @@ from logging import (
 )
 from logging.config import dictConfig
 from os import environ
-from typing import Dict
 
 from microcosm.api import defaults, typed
 
@@ -214,11 +213,11 @@ def make_loggly_handler(graph, formatter):
     loggly_url = "{}/inputs/{}/tag/{}".format(
         base_url,
         graph.config.logging.loggly.token,
-        ",".join(set([
+        ",".join({
             graph.metadata.name,
             graph.config.logging.loggly.environment,
             metric_service_name,
-        ])),
+        }),
     )
     return {
         "class": graph.config.logging.https_handler.class_,
@@ -269,7 +268,7 @@ def make_library_levels(graph):
     return levels
 
 
-def bump_level_factory(mapping: Dict[str, int]):
+def bump_level_factory(mapping: dict[str, int]):
     factory = getLogRecordFactory()
 
     def apply(name, level, *args, **kwargs):
