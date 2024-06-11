@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 
 project = "microcosm-logging"
-version = "1.10.0"
+version = "2.0.0"
 
 setup(
     name=project,
@@ -19,13 +19,12 @@ setup(
     keywords="microcosm",
     install_requires=[
         "loggly-python-handler>=1.0.0",
-        "microcosm>=2.12.0",
+        "microcosm>=4.0.0",
         "python-json-logger>=0.1.9",
         "requests[security]>=2.18.4",
         "python-logstash-async>=2.3.0",
     ],
     setup_requires=[
-        "nose>=1.3.6",
     ],
     dependency_links=[
     ],
@@ -35,8 +34,18 @@ setup(
             "logging = microcosm_logging.factories:configure_logging"
         ],
     },
+    extras_require={
+        "test": [
+            "coverage>=3.7.1",
+            "parameterized>=0.8.1",
+            "PyHamcrest>=1.9.0",
+            "pytest-cov>=5.0.0",
+            "pytest>=8.2.2",
+        ],
+    },
     tests_require=[
         "coverage>=3.7.1",
         "PyHamcrest>=1.9.0",
+        "pytest-cov>=5.0.0",
     ],
 )

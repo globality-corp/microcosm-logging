@@ -2,9 +2,10 @@
   "params": {
     "name": "microcosm-logging",
     "pypi": {
-      "enabled": true
+      "enabled": true,
+      "repository": "pypi"
     }
   },
   "type": "python-library",
-  "version": "2021.21.1"
+  "version": "2024.52.0"
 }
