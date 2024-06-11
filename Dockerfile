@@ -13,7 +13,7 @@
 
 # ----------- deps -----------
 # Install from Debian Stretch with modern Python support
-FROM python:slim-stretch as deps
+FROM python:3.8-slim-buster as deps
 
 #
 # Most services will use the same set of packages here, though a few will install
@@ -81,10 +81,10 @@ ENV LC_ALL en_US.UTF-8
 COPY README.md MANIFEST.in setup.cfg setup.py pyproject.tom[l] HISTORY.rs[t] conftest.p[y] /src/
 
 RUN pip install --no-cache-dir --upgrade --extra-index-url ${EXTRA_INDEX_URL} /src/ && \
+    pip install importlib-metadata && \
     apt-get remove --purge -y ${BUILD_PACKAGES} && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
-
 
 # ----------- final -----------
 FROM base
