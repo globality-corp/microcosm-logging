@@ -1,6 +1,6 @@
 from logging import Formatter
 
-from pythonjsonlogger.jsonlogger import merge_record_extra
+from pythonjsonlogger.core import merge_record_extra
 
 
 class ExtraConsoleFormatter(Formatter):
