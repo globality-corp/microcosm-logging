@@ -12,7 +12,6 @@
 #
 
 # ----------- deps -----------
-# Install from Debian Stretch with modern Python support
 FROM python:3.11-slim-buster as deps
 
 #
@@ -80,8 +79,7 @@ ENV LC_ALL en_US.UTF-8
 # copy pyproject.toml and HISTORY.rst only if they exist
 COPY README.md MANIFEST.in setup.cfg setup.py pyproject.tom[l] HISTORY.rs[t] conftest.p[y] /src/
 
-RUN pip install --no-cache-dir --upgrade --extra-index-url ${EXTRA_INDEX_URL} /src/ && \
-    pip install importlib-metadata && \
+RUN pip install --no-cache-dir --upgrade --extra-index-url "${EXTRA_INDEX_URL}" /src/ && \
     apt-get remove --purge -y ${BUILD_PACKAGES} && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
