@@ -35,6 +35,12 @@ setup(
         ],
     },
     extras_require={
+        "lint": [
+            "flake8",
+            "flake8-isort",
+            "flake8-logging-format",
+            "flake8-print",
+        ],
         "test": [
             "coverage>=3.7.1",
             "parameterized>=0.8.1",
